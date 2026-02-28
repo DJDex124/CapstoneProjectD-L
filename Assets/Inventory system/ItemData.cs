@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item")]
-public class ItemData : ScriptableObject
+[CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/OldItem")]
+public class OldItemData : ScriptableObject
 {
     public string itemName;
     public Sprite itemSprite;

@@ -2,16 +2,17 @@ using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static ItemData;
+using static OldItemData;
 
-public class Inventory : MonoBehaviour
+public class OldInventory : MonoBehaviour
 {
     public int currentIndex;
     int maxIndex;
-    public ItemSlot[] itemSlots;
+    public OldItemSlot[] itemSlots;
     
+    public bool isOpen;
 
-    public static Inventory Instance;
+    public static OldInventory Instance;
 
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class Inventory : MonoBehaviour
     {
         if (itemSlots.Length == 0)
         {
-            itemSlots = GetComponentsInChildren<ItemSlot>();
+            itemSlots = GetComponentsInChildren<OldItemSlot>();
         }
         foreach (var slot in itemSlots)
         {
@@ -41,6 +42,9 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+    
+
+        //Old system
         for (int i = 0; i < itemSlots.Length; i++)
         {
             itemSlots[i].index = i;
@@ -49,6 +53,7 @@ public class Inventory : MonoBehaviour
 
         float scroll = Mouse.current.scroll.ReadValue().y;
 
+       
         if (scroll > 0f)
         {
             currentIndex = (currentIndex + 1) % maxIndex;
@@ -58,8 +63,17 @@ public class Inventory : MonoBehaviour
             currentIndex = (currentIndex - 1 + maxIndex) % maxIndex;
         }
     }
+    public void HandleInput()
+    
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            isOpen = !isOpen;
+        }
 
-    public void AddItem(ItemData item)
+    }
+    //Old system, will be used for hotbar and quick access slots, new system will be used for inventory management and crafting
+    public void AddItem(OldItemData item)
     {
 
         foreach (var slot in itemSlots)
@@ -89,8 +103,8 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-
-    public void RemoveItem(ItemData item)
+    //Old system, will be used for hotbar and quick access slots, new system will be used for inventory management and crafting
+    public void RemoveItem(OldItemData item)
     {
         foreach (var slot in itemSlots)
         {
@@ -115,15 +129,15 @@ public class Inventory : MonoBehaviour
         }
 
     }
-   
+    //Old system, will be used for hotbar and quick access slots, new system will be used for inventory management and crafting
     public void DropSelectedItem(Transform dropOrigin)
     {
         if (currentIndex < 0 || currentIndex >= itemSlots.Length)
             return;
 
-        ItemSlot selectedSlot = itemSlots[currentIndex];
+        OldItemSlot selectedSlot = itemSlots[currentIndex];
 
-        if (selectedSlot.itemInSlot != null && selectedSlot.itemInSlot.itemType == ItemData.ItemType.Item && selectedSlot.itemCount > 0)
+        if (selectedSlot.itemInSlot != null && selectedSlot.itemInSlot.itemType == OldItemData.ItemType.Item && selectedSlot.itemCount > 0)
         {
             GameObject prefab = selectedSlot.itemInSlot.pickupPrefab;
 

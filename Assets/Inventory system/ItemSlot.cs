@@ -6,10 +6,10 @@ using TMPro;
 using UnityEngine.EventSystems;
 using NUnit.Framework.Interfaces;
 
-public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class OldItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public bool selected;
-    public ItemData itemInSlot;
+    public OldItemData itemInSlot;
     public int itemCount;
     public int index;
 
