@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6747261147907725881}
   - component: {fileID: 9215532704776800518}
   - component: {fileID: 136056651982313626}
+  - component: {fileID: 4885299565604864525}
   m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
@@ -112,3 +113,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4885299565604864525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8082992322306171653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c418952031f2c49ba020a1871b68a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  item: {fileID: 11400000, guid: db5fc3ae52355624f95fefe6e179e081, type: 2}
+  quantity: 1
+  autoPickup: 0
+  interactKey: 102
+  interactRange: 2.5
+  promptObject: {fileID: 0}

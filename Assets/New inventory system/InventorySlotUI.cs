@@ -66,13 +66,13 @@ public class InventorySlotUI : MonoBehaviour,
         slotData = InventoryManager.Instance.GetSlot(SlotIndex);
         if (slotData == null || slotData.IsEmpty)
         {
-            iconImage.enabled = false;
+            iconImage.gameObject.SetActive(false);
             quantityText.enabled = false;
             
         }
         else
         {
-            iconImage.enabled = true;
+            iconImage.gameObject.SetActive(true);
             iconImage.sprite = slotData.item.icon;
 
             quantityText.enabled = slotData.item.isStackable && slotData.quantity > 1;
