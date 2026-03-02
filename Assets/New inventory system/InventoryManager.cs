@@ -2,11 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Core inventory data manager. Attach to the Player or a persistent GameManager.
-/// Holds all slot data and fires events when things change.
-/// No UI code lives here.
-/// </summary>
+
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
@@ -16,8 +12,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private int columns = 8;
 
     
+    private Dictionary<clothingType, ClothingSlot> clothingSlots;
 
-    // All inventory slots — hotbar is always slots [0 .. hotbarSlotCount-1]
+
     private InventorySlot[] slots;
     public int TotalSlots => rows * columns;
     
@@ -41,6 +38,13 @@ public class InventoryManager : MonoBehaviour
         Instance = this;
 
         InitialiseSlots();
+        clothingSlots = new Dictionary<clothingType, ClothingSlot>();
+     
+        foreach (clothingType type in System.Enum.GetValues(typeof(clothingType)))
+        {
+            if (type == clothingType.NA) continue;
+            clothingSlots[type] = new ClothingSlot();
+        }
     }
 
     private void InitialiseSlots()
@@ -51,12 +55,9 @@ public class InventoryManager : MonoBehaviour
     }
 
     // ------------------------------------------------------------------
-    // Public API — Adding Items
+    // Adding Items
     // ------------------------------------------------------------------
 
-    /// <summary>
-    /// Tries to add a quantity of an item. Returns the leftover amount that didn't fit.
-    /// </summary>
     public int TryAddItem(ItemData item, int quantity = 1)
     {
         if (item == null || quantity <= 0) return quantity;
@@ -95,7 +96,6 @@ public class InventoryManager : MonoBehaviour
         return remaining; // 0 means everything fit
     }
 
-    /// <summary>Returns true if at least one of the item fits.</summary>
     public bool CanAddItem(ItemData item, int quantity = 1)
     {
         int space = 0;
@@ -110,14 +110,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    // ------------------------------------------------------------------
-    // Public API — Removing Items
-    // ------------------------------------------------------------------
-
-    /// <summary>
-    /// Removes a quantity of an item from anywhere in the inventory.
-    /// Returns true if the full amount was removed.
-    /// </summary>
+   
     public bool TryRemoveItem(ItemData item, int quantity = 1)
     {
         if (!HasItem(item, quantity)) return false;
@@ -137,17 +130,13 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    /// <summary>Remove all items from a specific slot index.</summary>
+   
     public void ClearSlot(int index)
     {
         if (!IsValidIndex(index)) return;
         slots[index].Clear();
         OnSlotChanged?.Invoke(index);
     }
-
-    // ------------------------------------------------------------------
-    // Public API — Querying
-    // ------------------------------------------------------------------
 
     public InventorySlot GetSlot(int index)
     {
@@ -170,14 +159,6 @@ public class InventoryManager : MonoBehaviour
         return count;
     }
 
-    // ------------------------------------------------------------------
-    // Public API — Slot Manipulation
-    // ------------------------------------------------------------------
-
-    /// <summary>
-    /// Swaps the contents of two slots. Used by drag-and-drop.
-    /// If the items match and are stackable, merges them instead.
-    /// </summary>
     public void SwapSlots(int fromIndex, int toIndex)
     {
         if (!IsValidIndex(fromIndex) || !IsValidIndex(toIndex)) return;
@@ -208,7 +189,7 @@ public class InventoryManager : MonoBehaviour
         OnSlotChanged?.Invoke(toIndex);
     }
 
-    /// <summary>Split a stack: move half (rounded down) to an empty target slot.</summary>
+   
     public bool TrySplitStack(int fromIndex, int toIndex)
     {
         if (!IsValidIndex(fromIndex) || !IsValidIndex(toIndex)) return false;
@@ -253,12 +234,8 @@ public class InventoryManager : MonoBehaviour
         else OpenInventory();
     }
 
-    // ------------------------------------------------------------------
-    // Helpers
-    // ------------------------------------------------------------------
-
     private bool IsValidIndex(int index) => index >= 0 && index < TotalSlots;
 
-    // Useful for saving — returns a copy of all slot data
+    //returns a copy of all slot data
     public InventorySlot[] GetAllSlots() => slots;
 }

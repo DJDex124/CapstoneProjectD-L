@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// ScriptableObject that defines an item's static data.
-/// Create via: Right Click > Create > Inventory > Item Data
-/// </summary>
+
 [CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item Data")]
 public class ItemData : ScriptableObject
 {
@@ -21,16 +18,18 @@ public class ItemData : ScriptableObject
     public ItemType itemType = ItemType.Misc;
     public ItemRarity rarity = ItemRarity.Common;
 
-    [Header("Weight (optional)")]
-    public float weight = 0.1f;
+    [Header("InventoryAndClothing")]
+    public bool hasStorage = false;
+    public int storageRows = 0;
+    public int storageColumns = 0;
+    public clothingType clothingType = clothingType.NA;
 }
 
 public enum ItemType
 {
     Weapon,
-    Armour,
+    clothing,
     Consumable,
-    Tool,
     Resource,
     Misc
 }
@@ -42,5 +41,15 @@ public enum ItemRarity
     Rare,
     Epic,
     Legendary
+}
+
+public enum clothingType
+{
+    NA,
+    Hat,
+    shirt,
+    pants,
+    shoes,
+    Backpack,  
 }
 

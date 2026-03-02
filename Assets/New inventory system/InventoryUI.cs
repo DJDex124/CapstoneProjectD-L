@@ -3,21 +3,10 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 
-/// <summary>
-/// Manages the full-page inventory panel UI.
-/// Attach to the root inventory Canvas or a panel object.
-///
-/// Hierarchy expected:
-///   InventoryCanvas
-///     InventoryPanel          <-- the full-screen dark overlay
-///       GridContainer         <-- Grid Layout Group lives here
-///       HotbarContainer       <-- optional separate row
-///     TooltipPanel
-///     ContextMenuPanel
-///     DragLayer               <-- empty RectTransform, full screen, sibling of panel
-/// </summary>
+
 public class InventoryUI : MonoBehaviour
 {
+   
     public static InventoryUI Instance { get; private set; }
 
     [Header("Panels")]
@@ -42,6 +31,9 @@ public class InventoryUI : MonoBehaviour
     [Header("Input")]
     [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
 
+    [Header("References")]
+    [SerializeField] private Camera playerCamera;
+
     // ----------------------------------------------------------------
     private InventoryManager manager;
     private InventorySlotUI[] slotUIs;
@@ -59,6 +51,7 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
+
         manager = InventoryManager.Instance;
 
         manager.OnInventoryOpened.AddListener(OnInventoryOpened);
@@ -210,8 +203,9 @@ public class InventoryUI : MonoBehaviour
             Instantiate(slot.item.worldPrefab, spawnPos, Quaternion.identity);
         }
 
-        manager.ClearSlot(slotIndex);
-        Debug.Log($"Dropped: {slot.item.itemName}");
+        string itemName = slot.item.itemName;
+        InventoryManager.Instance.ClearSlot(slotIndex);
+        Debug.Log($"Dropped: {itemName}");
     }
 
     // ----------------------------------------------------------------
