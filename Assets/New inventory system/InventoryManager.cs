@@ -31,6 +31,13 @@ public class InventoryManager : MonoBehaviour
     // ------------------------------------------------------------------
     public bool IsOpen { get; private set; }
 
+    public ClothingSlot GetClothingSlot(clothingType type)
+    {
+        if (clothingSlots.ContainsKey(type))
+            return clothingSlots[type];
+        return null;
+    }
+
     private void Awake()
     {
         // Singleton
@@ -238,4 +245,19 @@ public class InventoryManager : MonoBehaviour
 
     //returns a copy of all slot data
     public InventorySlot[] GetAllSlots() => slots;
+
+    // ------------------------------------------------------------------
+    // Clothing Slots
+    // ------------------------------------------------------------------
+    public void SwapClothingSlots(clothingType from, clothingType to)
+    {
+        ClothingSlot fromSlot = GetClothingSlot(from);
+        ClothingSlot toSlot = GetClothingSlot(to);
+
+        if (fromSlot == null || toSlot == null) return;
+
+        ItemData temp = fromSlot.equippedItem;
+        fromSlot.Equip(toSlot.equippedItem);
+        toSlot.Equip(temp);
+    }
 }

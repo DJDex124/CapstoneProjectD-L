@@ -209,6 +209,33 @@ public class InventoryUI : MonoBehaviour
     }
 
     // ----------------------------------------------------------------
+    // Clothing Slots
+    // ----------------------------------------------------------------
+    public void ShowContextMenu(clothingType slotType, Vector2 screenPosition)
+    {
+        ClothingSlot slot = InventoryManager.Instance.GetClothingSlot(slotType);
+        if (slot == null || slot.IsEmpty) return;
+
+        contextMenuPanel.SetActive(true);
+        contextMenuPanel.transform.position = ClampToScreen(screenPosition);
+
+        contextUseButton.onClick.RemoveAllListeners();
+        contextUseButton.onClick.AddListener(() =>
+        {
+            HideContextMenu();
+        });
+
+        contextDropButton.onClick.RemoveAllListeners();
+        contextDropButton.onClick.AddListener(() =>
+        {
+            InventoryManager.Instance.GetClothingSlot(slotType).Unequip();
+            HideContextMenu();
+        });
+
+        contextSplitButton.gameObject.SetActive(false);
+    }
+
+    // ----------------------------------------------------------------
     // Helpers
     // ----------------------------------------------------------------
 
@@ -220,4 +247,5 @@ public class InventoryUI : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, 100, h);
         return pos;
     }
+    
 }

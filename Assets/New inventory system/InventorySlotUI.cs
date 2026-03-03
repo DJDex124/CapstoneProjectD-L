@@ -3,10 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-/// <summary>
-/// Attach to each inventory slot UI prefab.
-/// Handles: display, click, right-click, drag and drop, shift-click to split.
-/// </summary>
+
 public class InventorySlotUI : MonoBehaviour,
     IPointerClickHandler,
     IBeginDragHandler,
@@ -120,6 +117,8 @@ public class InventorySlotUI : MonoBehaviour,
         ghostImage.raycastTarget = false; // so drops hit the slot beneath
 
         iconImage.color = new Color(1, 1, 1, 0.4f); // fade source
+        DragManager.inventorySourceIndex = SlotIndex;
+        DragManager.isDraggingFromInventory = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -135,6 +134,8 @@ public class InventorySlotUI : MonoBehaviour,
         dragGhost = null;
         dragSource = null;
         iconImage.color = Color.white;
+        DragManager.isDraggingFromInventory = false;
+        DragManager.inventorySourceIndex = -1;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -154,10 +155,7 @@ public class InventorySlotUI : MonoBehaviour,
         dragSource = null;
     }
 
-    // ----------------------------------------------------------------
-    // Hover — show tooltip
-    // ----------------------------------------------------------------
-
+   
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (highlightOverlay) highlightOverlay.enabled = true;
