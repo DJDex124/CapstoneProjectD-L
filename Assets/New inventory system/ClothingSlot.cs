@@ -1,3 +1,5 @@
+using System;
+
 public class ClothingSlot
 {
     public ItemData equippedItem;
@@ -19,5 +21,10 @@ public class ClothingSlot
     {
         equippedItem = null;
         container = null;
+    }
+
+    internal void Refresh()
+    {
+        throw new NotImplementedException();
     }
 }
