@@ -76,6 +76,8 @@ public class ClothingSlotUI : MonoBehaviour,
         ghostImage.raycastTarget = false;
 
         iconImage.color = new Color(1, 1, 1, 0.4f);
+        DragManager.isDraggingFromClothing = true;
+        DragManager.clothingSource = slotType;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -92,6 +94,8 @@ public class ClothingSlotUI : MonoBehaviour,
         dragGhost = null;
         dragSource = null;
         iconImage.color = Color.white;
+        DragManager.isDraggingFromClothing = false;
+        DragManager.clothingSource = clothingType.NA;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -107,12 +111,18 @@ public class ClothingSlotUI : MonoBehaviour,
             if (fromSlot.item.clothingType != slotType) return;
 
             // Equip it
-            clothingSlot.Equip(fromSlot.item);
+            InventoryManager.Instance.EquipItem(slotType, fromSlot.item);
             InventoryManager.Instance.ClearSlot(fromIndex);
             Refresh();
         }
         else if (DragManager.isDraggingFromClothing)
         {
+            ClothingSlot fromSlot = InventoryManager.Instance.GetClothingSlot(DragManager.clothingSource);
+            if (fromSlot == null || fromSlot.IsEmpty) return;
+
+            if (fromSlot.equippedItem.clothingType != slotType) return; 
+
+            InventoryUI.Instance.GetClothingSlotUI(DragManager.clothingSource)?.Refresh();
             InventoryManager.Instance.SwapClothingSlots(DragManager.clothingSource, slotType);
             InventoryManager.Instance.GetClothingSlot(slotType).Refresh();
         }

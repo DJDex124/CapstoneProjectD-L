@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+using System.Collections.Generic;
 
 
 public class InventoryUI : MonoBehaviour
@@ -20,7 +21,9 @@ public class InventoryUI : MonoBehaviour
     [Header("Slot Prefab")]
     [SerializeField] private GameObject slotPrefab;
 
-    
+    [Header("Clothing Storage")]
+    [SerializeField] private RectTransform clothingStorageList;
+    [SerializeField] private GameObject clothingStorageSectionPrefab;
 
     [Header("Context Menu")]
     [SerializeField] private GameObject contextMenuPanel;
@@ -38,6 +41,8 @@ public class InventoryUI : MonoBehaviour
     private InventoryManager manager;
     private InventorySlotUI[] slotUIs;
     private int contextMenuSlotIndex = -1;
+    private Dictionary<clothingType, ClothingStorageSectionUI> activeSections
+    = new Dictionary<clothingType, ClothingStorageSectionUI>();
 
     // ----------------------------------------------------------------
     // Lifecycle
@@ -228,11 +233,35 @@ public class InventoryUI : MonoBehaviour
         contextDropButton.onClick.RemoveAllListeners();
         contextDropButton.onClick.AddListener(() =>
         {
-            InventoryManager.Instance.GetClothingSlot(slotType).Unequip();
+            InventoryManager.Instance.UnequipItem(slotType);
             HideContextMenu();
         });
 
         contextSplitButton.gameObject.SetActive(false);
+    }
+    public ClothingSlotUI GetClothingSlotUI(clothingType type)
+    {
+        foreach (ClothingSlotUI slot in FindObjectsByType<ClothingSlotUI>(FindObjectsSortMode.None))
+            if (slot.slotType == type) return slot;
+        return null;
+    }
+
+    public void SpawnClothingStorage(clothingType type, ItemContainer container, string itemName)
+    {
+        if (activeSections.ContainsKey(type)) return;
+
+        GameObject sectionGO = Instantiate(clothingStorageSectionPrefab, clothingStorageList);
+        ClothingStorageSectionUI section = sectionGO.GetComponent<ClothingStorageSectionUI>();
+        section.Initialise(container, itemName);
+        activeSections[type] = section;
+    }
+
+    public void DestroyClothingStorage(clothingType type)
+    {
+        if (!activeSections.ContainsKey(type)) return;
+
+        Destroy(activeSections[type].gameObject);
+        activeSections.Remove(type);
     }
 
     // ----------------------------------------------------------------

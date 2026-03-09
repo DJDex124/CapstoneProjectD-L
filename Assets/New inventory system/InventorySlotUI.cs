@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.InputSystem;
 
 
 public class InventorySlotUI : MonoBehaviour,
@@ -140,9 +141,21 @@ public class InventorySlotUI : MonoBehaviour,
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (DragManager.isDraggingFromClothing)
+        {
+            ClothingSlot fomSlot = InventoryManager.Instance.GetClothingSlot(DragManager.clothingSource);
+            if (fomSlot == null || fomSlot.IsEmpty) return;
+
+            int leftover = InventoryManager.Instance.TryAddItem(fomSlot.equippedItem, 1);
+            if (leftover == 0)
+            {
+                fomSlot.Unequip();
+                InventoryUI.Instance.GetClothingSlotUI(DragManager.clothingSource)?.Refresh();
+            }
+        }
         if (dragSource == null || dragSource == this) return;
 
-        bool shiftHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        bool shiftHeld = Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed;
 
         if (shiftHeld)
             InventoryManager.Instance.TrySplitStack(dragSource.SlotIndex, SlotIndex);

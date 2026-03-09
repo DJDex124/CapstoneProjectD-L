@@ -113,6 +113,7 @@ public class InventoryManager : MonoBehaviour
             else if (slot.item == item && item.isStackable)
                 space += slot.RemainingSpace();
             if (space >= quantity) return true;
+
         }
         return false;
     }
@@ -259,5 +260,24 @@ public class InventoryManager : MonoBehaviour
         ItemData temp = fromSlot.equippedItem;
         fromSlot.Equip(toSlot.equippedItem);
         toSlot.Equip(temp);
+    }
+    public void EquipItem(clothingType type, ItemData item)
+    {
+        ClothingSlot slot = GetClothingSlot(type);
+        if (slot == null) return;
+
+        slot.Equip(item);
+
+        if (item.hasStorage)
+            InventoryUI.Instance.SpawnClothingStorage(type, slot.container, item.itemName);
+    }
+
+    public void UnequipItem(clothingType type)
+    {
+        ClothingSlot slot = GetClothingSlot(type);
+        if (slot == null) return;
+
+        slot.Unequip();
+        InventoryUI.Instance.DestroyClothingStorage(type);
     }
 }
