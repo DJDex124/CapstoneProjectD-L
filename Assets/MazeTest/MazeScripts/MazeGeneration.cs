@@ -44,7 +44,7 @@ public class MazeGeneration : MonoBehaviour
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
 
-        //yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.05f);
 
         MazeCell nextCell;
 
@@ -157,6 +157,6 @@ public class MazeGeneration : MonoBehaviour
         startCell.ClearFrontWall();
 
         //set player spawn to the start cell
-        Instantiate(_playerPrefab, startCell.transform.position + Vector3.up, Quaternion.identity);
+        //Instantiate(_playerPrefab, startCell.transform.position + Vector3.up, Quaternion.identity);
     }
 }
