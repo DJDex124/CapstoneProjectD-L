@@ -9,10 +9,16 @@ public class MazeGeneration : MonoBehaviour
     private MazeCell _mazeCellPrefab;
 
     [SerializeField]
+    private float _cellSize = 4f;
+
+    [SerializeField]
     private int _mazeWidth;
 
     [SerializeField]
     private int _mazeDepth;
+
+    [SerializeField]
+    private GameObject _playerPrefab;
 
     private MazeCell[,] _mazeGrid;
 
@@ -24,11 +30,13 @@ public class MazeGeneration : MonoBehaviour
         {
             for (int z = 0; z < _mazeDepth; z++)
             {
-                _mazeGrid[x,z] = Instantiate(_mazeCellPrefab, new Vector3(x, 0, z), Quaternion.identity);
+                _mazeGrid[x, z] = Instantiate(_mazeCellPrefab, new Vector3(x * _cellSize, 0, z * _cellSize), Quaternion.identity);
             }
         }
 
         yield return GenerateMaze(null, _mazeGrid[0, 0]);
+
+        CreateEntranceAndExit();
     }
 
     private IEnumerator GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -36,7 +44,7 @@ public class MazeGeneration : MonoBehaviour
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
 
-        yield return new WaitForSeconds(0.05f);
+        //yield return new WaitForSeconds(0.05f);
 
         MazeCell nextCell;
 
@@ -60,8 +68,8 @@ public class MazeGeneration : MonoBehaviour
 
     private IEnumerable<MazeCell> GetUnvisitedCells(MazeCell currentCell)
     {
-        int x = (int)currentCell.transform.position.x;
-        int z = (int)currentCell.transform.position.z;
+        int x = Mathf.RoundToInt(currentCell.transform.position.x / _cellSize);
+        int z = Mathf.RoundToInt(currentCell.transform.position.z / _cellSize);
 
         if (x + 1 < _mazeWidth)
         {
@@ -136,5 +144,19 @@ public class MazeGeneration : MonoBehaviour
             currentCell.ClearFrontWall();   
             return;
         }
+    }
+
+    private void CreateEntranceAndExit()
+    {
+        //create exit
+        MazeCell endCell = _mazeGrid[0, 0];
+        endCell.ClearBackWall();
+
+        //create start
+        MazeCell startCell = _mazeGrid[_mazeWidth - 1, _mazeDepth - 1];
+        startCell.ClearFrontWall();
+
+        //set player spawn to the start cell
+        Instantiate(_playerPrefab, startCell.transform.position + Vector3.up, Quaternion.identity);
     }
 }
