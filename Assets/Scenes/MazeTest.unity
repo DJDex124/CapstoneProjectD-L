@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   _mazeCellPrefab: {fileID: 7022070345779681316, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-  _cellSize: 4
-  _mazeWidth: 20
-  _mazeDepth: 20
+  _cellSize: 9
+  _mazeWidth: 15
+  _mazeDepth: 15
   _playerPrefab: {fileID: 1948179234}
 --- !u!4 &312443503
 Transform:
@@ -863,63 +863,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1948179235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1753695742
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -70.98676
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.000001187555
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 177.3863
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 184512812996479150, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7242007116420537817, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
-      propertyPath: m_Name
-      value: MazeCell
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4a26359a5b159fb4986294960ce0c5f4, type: 3}
 --- !u!1 &1948179234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,4 +988,3 @@ SceneRoots:
   - {fileID: 312443503}
   - {fileID: 1948179235}
   - {fileID: 1274460308}
-  - {fileID: 1753695742}
