@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public Slider healthSlider;
     public Slider staminaSlider;
 
-    private void Awake()
+    void Awake()
     {
         if (current != null && current != this)
         {
@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         else
         {
             current = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
     public void UpdateSliders()
