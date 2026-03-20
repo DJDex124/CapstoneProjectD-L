@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
             UIManager.current.staminaSlider.maxValue = maxStamina;
             UIManager.current.staminaSlider.value = currentStamina;
         }
+        
     }
 
     void Update()
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
             canJump = false;
         else
             canJump = true;
+        
 
     }
 

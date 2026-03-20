@@ -12,13 +12,13 @@ public class OldInventory : MonoBehaviour
     
     public bool isOpen;
 
-    public static OldInventory Instance;
+    public static OldInventory current;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (current == null)
         {
-            Instance = this;
+            current = this;
         }
         else
         {
@@ -103,7 +103,7 @@ public class OldInventory : MonoBehaviour
             }
         }
     }
-    //Old system, will be used for hotbar and quick access slots, new system will be used for inventory management and crafting
+    
     public void RemoveItem(OldItemData item)
     {
         foreach (var slot in itemSlots)
@@ -129,7 +129,7 @@ public class OldInventory : MonoBehaviour
         }
 
     }
-    //Old system, will be used for hotbar and quick access slots, new system will be used for inventory management and crafting
+    
     public void DropSelectedItem(Transform dropOrigin)
     {
         if (currentIndex < 0 || currentIndex >= itemSlots.Length)

@@ -17,8 +17,7 @@ public class MazeGeneration : MonoBehaviour
     [SerializeField]
     private int _mazeDepth;
 
-    [SerializeField]
-    private GameObject _playerPrefab;
+    
 
     private MazeCell[,] _mazeGrid;
 

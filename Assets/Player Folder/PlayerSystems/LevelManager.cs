@@ -8,4 +8,16 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene("GameManager", LoadSceneMode.Additive);  
         SceneManager.LoadScene("UIManager", LoadSceneMode.Additive);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SceneManager.LoadScene("MazeGeneration", LoadSceneMode.Additive);
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SceneManager.LoadScene("InventorySystem", LoadSceneMode.Additive);
+        }
+    }
 }

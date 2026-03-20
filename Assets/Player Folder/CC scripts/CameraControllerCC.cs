@@ -2,9 +2,18 @@ using UnityEngine;
 
 public class CameraControllerCC : MonoBehaviour
 {
- 
+    public static CameraControllerCC current;
+
     private float sensitivity = 2f;
     private float xRotation = 0f;
+
+    public Ray LookRay => new Ray(transform.position, transform.forward);
+
+    void Awake()
+    {
+        current = this; 
+    }
+    
 
     void Start()
     {
