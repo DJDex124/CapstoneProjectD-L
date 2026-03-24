@@ -12,7 +12,7 @@ public class PlayerMovementCC : MonoBehaviour
     public float groundCheckDistance = 0.1f;
     public LayerMask groundMask;
 
-    private CharacterController controller;
+    public CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
 

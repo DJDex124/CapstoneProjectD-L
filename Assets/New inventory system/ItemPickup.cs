@@ -14,7 +14,7 @@ public class ItemPickup : MonoBehaviour
     [Tooltip("True = auto-pickup on trigger enter. False = requires interact key.")]
     public bool autoPickup = false;
     [SerializeField] private KeyCode interactKey = KeyCode.F;
-    [SerializeField] private float interactRange = 2.5f;
+    [SerializeField] private float interactRange = 3;
 
     private bool playerInRange = false;
     private GameObject interactPrompt; // optional UI prompt, assign via Inspector

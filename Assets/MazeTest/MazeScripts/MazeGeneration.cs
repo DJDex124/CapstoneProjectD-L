@@ -17,7 +17,9 @@ public class MazeGeneration : MonoBehaviour
     [SerializeField]
     private int _mazeDepth;
 
-    
+    public Vector2Int _spawnPosition;
+
+    public Transform mazePos;
 
     private MazeCell[,] _mazeGrid;
 
@@ -43,7 +45,7 @@ public class MazeGeneration : MonoBehaviour
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
 
-        yield return new WaitForSeconds(0.05f);
+        //yield return new WaitForSeconds(0.05f);
 
         MazeCell nextCell;
 
