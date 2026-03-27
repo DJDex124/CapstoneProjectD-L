@@ -13,5 +13,7 @@ public class MenuManager : MonoBehaviour
     public void mainMenuButton()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

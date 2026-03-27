@@ -8,7 +8,11 @@ public class ItemPrefab : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerMovementCC.current.canPickup && Input.GetKeyDown(KeyCode.E))
+        if (PlayerInteractions.current == null) { Debug.LogError("PlayerInteractions.current is null!"); return; }
+        if (OldInventory.current == null) { Debug.LogError("OldInventory.current is null!"); return; }
+        if (itemData == null) { Debug.LogError("itemData is null!"); return; }
+
+        if (PlayerInteractions.current.canSee && Input.GetKeyDown(KeyCode.E))
         {
             OldInventory.current.AddItem(itemData);
             Destroy(gameObject);

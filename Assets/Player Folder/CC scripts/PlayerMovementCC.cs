@@ -16,11 +16,7 @@ public class PlayerMovementCC : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
-    [Header("pickup settings")]
-    public bool canPickup; 
-    public float pickupRange = 3f;
-    public LayerMask pickupMask;
-
+    
     public static PlayerMovementCC current;
 
     void Start()
@@ -35,7 +31,7 @@ public class PlayerMovementCC : MonoBehaviour
         groundcheck();
         jump();
         sprint();
-        HandlePickup();
+        
 
         if (isGrounded && velocity.y < 0)
         {
@@ -60,17 +56,9 @@ public class PlayerMovementCC : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * (controller.skinWidth + 0.05f);
         Gizmos.DrawLine(rayOrigin, rayOrigin + Vector3.down * groundCheckDistance);
 
-        Vector3 lookDir = Camera.main.transform.forward;
-        Gizmos.color = canPickup ? Color.green : Color.red;
-        Gizmos.DrawLine(rayOrigin, rayOrigin + lookDir * pickupRange);
+        
     }
-    void HandlePickup()
-    {
-        Vector3 rayOrigin = transform.position + Vector3.up * (controller.skinWidth + 0.05f);
-        Vector3 lookDir = Camera.main.transform.forward;
-        canPickup = Physics.Raycast(rayOrigin, lookDir, pickupRange);
-
-    }
+    
 
     void jump()
     {
