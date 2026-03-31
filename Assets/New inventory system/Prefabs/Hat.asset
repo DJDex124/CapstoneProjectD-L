@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Hat
   description: 
+<<<<<<< Updated upstream
   icon: {fileID: 21300000, guid: 7b4e6e97286678d4d82c4c4922b37de4, type: 3}
   worldPrefab: {fileID: 1574512132884520110, guid: ac3b5bc81a15b094499fdff0e41be69d, type: 3}
+=======
+  icon: {fileID: 0}
+  worldPrefab: {fileID: 2436931954909183311, guid: 9bd4c83ed54d58c4eb99efdc6f69b301, type: 3}
+>>>>>>> Stashed changes
   isStackable: 0
   maxStackSize: 1
   itemType: 1
