@@ -19,10 +19,26 @@ public class PlayerMovementCC : MonoBehaviour
     
     public static PlayerMovementCC current;
 
+    [Header("Attack Settings")]
+    public float attackRange = 2f;
+    public float attackRadius = 0.5f;
+    public float attackDmg = 25f;
+    public float attackCldwn = 0.5f;
+    public Transform attackPoint;
+    public LayerMask enemyMask;
+
+    private float nextAttackTime = 0f;
+
+    public Animator animator;
+
+    public TrailRenderer swingTrail;
     void Start()
     {
         controller = GetComponent<CharacterController>();
         current = this;
+
+        if (swingTrail != null)
+            swingTrail.emitting = false;
     }
 
    
@@ -31,7 +47,7 @@ public class PlayerMovementCC : MonoBehaviour
         groundcheck();
         jump();
         sprint();
-        
+        attack();
 
         if (isGrounded && velocity.y < 0)
         {
@@ -56,10 +72,13 @@ public class PlayerMovementCC : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * (controller.skinWidth + 0.05f);
         Gizmos.DrawLine(rayOrigin, rayOrigin + Vector3.down * groundCheckDistance);
 
-        
+        if (attackPoint != null)
+        {
+            Gizmos.color = Color.blue;
+        }
+        Gizmos.DrawLine(attackPoint.position, attackPoint.position + attackPoint.forward * attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position + attackPoint.forward * attackRange, attackRadius);
     }
-    
-
     void jump()
     {
         if (GameManager.current == null)
@@ -88,6 +107,57 @@ public class PlayerMovementCC : MonoBehaviour
         }
     }
 
-    
-    
+    void attack()
+    {
+        if (Time.time < nextAttackTime)
+            return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            nextAttackTime = Time.time + attackCldwn;
+
+            animator.SetTrigger("Attack");
+
+        
+        }
+    }
+
+    public void PerformAttackHit()
+    {
+        Debug.Log("Animation hit triggered");
+
+        RaycastHit[] hits = Physics.SphereCastAll(
+            attackPoint.position,
+            attackRadius,
+            attackPoint.forward,
+            attackRange,
+            enemyMask
+        );
+
+        Debug.Log("Hits: " + hits.Length);
+
+        foreach (RaycastHit hit in hits)
+        {
+            Debug.Log("Hit object: " + hit.collider.name);
+
+            EnemyScript enemy = hit.collider.GetComponentInParent<EnemyScript>();
+
+            if (enemy != null)
+            {
+                Debug.Log("Enemy damaged");
+                enemy.TakeDamage(attackDmg);
+            }
+        }
+    }
+
+
+    public void EnableTrail()
+    {
+        swingTrail.emitting = true;
+    }
+
+    public void DisableTrail()
+    {
+        swingTrail.emitting = false;
+    }
 }
