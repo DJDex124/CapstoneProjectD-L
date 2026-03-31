@@ -124,7 +124,7 @@ public class ClothingSlotUI : MonoBehaviour,
 
             InventoryUI.Instance.GetClothingSlotUI(DragManager.clothingSource)?.Refresh();
             InventoryManager.Instance.SwapClothingSlots(DragManager.clothingSource, slotType);
-            InventoryManager.Instance.GetClothingSlot(slotType).Refresh();
+            Refresh(); 
         }
 
         DragManager.isDraggingFromInventory = false;
