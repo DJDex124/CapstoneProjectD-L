@@ -1718,6 +1718,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1358615805}
     - target: {fileID: 1409166932843523913, guid: 82cf8f562698d844e90e1a43e3749d04, type: 3}
+      propertyPath: attackCldwn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409166932843523913, guid: 82cf8f562698d844e90e1a43e3749d04, type: 3}
       propertyPath: attackPoint
       value: 
       objectReference: {fileID: 938907845}
