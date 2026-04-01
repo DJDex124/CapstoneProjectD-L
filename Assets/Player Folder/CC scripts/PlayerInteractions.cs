@@ -34,8 +34,14 @@ public class PlayerInteractions : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        if (PlayerMovementCC.current == null || PlayerMovementCC.current.controller == null)
+            return;
+        if (Camera.main == null)
+            return;
+
         Vector3 lookDir = Camera.main.transform.forward;
-        Vector3 rayOrigin = transform.position + Vector3.up * (PlayerMovementCC.current.controller.skinWidth + 0.05f);
+        Vector3 vector3 = transform.position + (Vector3.up * (PlayerMovementCC.current.controller.skinWidth + 0.05f));
+        Vector3 rayOrigin = vector3;
         Gizmos.color = canSee ? Color.green : Color.red;
         Gizmos.DrawLine(rayOrigin, rayOrigin + lookDir * pickupRange);
     }
